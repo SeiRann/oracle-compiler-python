@@ -1,24 +1,9 @@
-import requests
 import json
+from fetcher import fetch_set_cards
+from fetcher import dump_json
+from fetcher import read_oracle
 
-def dump_json(data, file_name):
-    with open(file_name+".json", "w") as f:
-        json.dump(data,f)
-
-
-
-
-
-
-
-def fetch_set_cards(set):
-    url = "https://api.scryfall.com/cards/search?q=set:lrw"
-
-    headers = {
-        "Accept":"application/json",
-        "User-Agent":"Test v0.1"
-    }
-
-    response = requests.get(url, headers=headers)
-
-    return response.json()
+# dump_json(fetch_set_cards("sum"), "summer_magic")
+f=open("summer_magic.json")
+data = json.load(f)
+dump_json(read_oracle(data), "summer_magic_oracle")
