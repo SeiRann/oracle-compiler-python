@@ -43,3 +43,17 @@ def read_oracle(data):
 
 
     return oracle_texts
+
+def tokenize_string(string):
+    tokens = []
+    temp_token = ""
+
+
+    for character in string:
+        if character != " ":
+            temp_token+= character
+        elif character == " " and temp_token != "":
+            tokens.append(temp_token)
+            temp_token = ""
+
+    return tokens
