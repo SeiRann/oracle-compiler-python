@@ -2,10 +2,12 @@ import requests
 import json
 import math
 
+# helper function for dumping json files
 def dump_json(data, file_name):
     with open(file_name+".json", "w") as f:
         json.dump(data,f)
 
+# fetch function that fetches all of the cards in a set
 def fetch_set_cards(set):
     data = []
     url = "https://api.scryfall.com/cards/search?q=set:"+set
@@ -33,6 +35,8 @@ def fetch_set_cards(set):
 
     return data
 
+
+# filter out only the oracle texts from the cards
 def read_oracle(data):
     oracle_texts = []
 
@@ -44,16 +48,20 @@ def read_oracle(data):
 
     return oracle_texts
 
-def tokenize_string(string):
-    tokens = []
-    temp_token = ""
+# ["Turn", "the", "oracle", "text", "into", "tokens"]
 
-
-    for character in string:
-        if character != " ":
-            temp_token+= character
-        elif character == " " and temp_token != "":
-            tokens.append(temp_token)
-            temp_token = ""
+def split_string(string: str) -> list:
+    string = string.replace("\n", " ")
+    tokens = string.split()
 
     return tokens
+
+def tokenize_strings(strings) -> list:
+    tokenized_strings = []
+
+    for string in strings:
+        text = split_string(string)
+        tokenized_strings.append(text)
+
+    return tokenized_strings
+
